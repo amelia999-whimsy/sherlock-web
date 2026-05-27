@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sherlock - Username Finder</title>
+    <title>Sherlock - The Search Begins</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,355 +13,709 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
+            color: #d4af37;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Effet de fond animé */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, rgba(13, 13, 25, 0.95) 0%, rgba(26, 26, 46, 0.95) 100%);
+            border: 2px solid #d4af37;
+            border-radius: 2px;
+            box-shadow: 
+                0 0 40px rgba(212, 175, 55, 0.2),
+                inset 0 0 40px rgba(212, 175, 55, 0.05),
+                0 20px 60px rgba(0, 0, 0, 0.8);
             padding: 40px;
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 30px;
+            position: relative;
+        }
+
+        header::before {
+            content: '⚔';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            opacity: 0.5;
+        }
+
+        header::after {
+            content: '⚔';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%) scaleX(-1);
+            font-size: 24px;
+            opacity: 0.5;
         }
 
         h1 {
-            color: #333;
-            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 3px;
             margin-bottom: 10px;
-            font-size: 28px;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
         }
 
         .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
+            color: #b8860b;
+            font-size: 18px;
+            font-style: italic;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
         }
 
-        .search-box {
+        .tagline {
+            color: #8b7355;
+            font-size: 14px;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .input-section {
             display: flex;
             gap: 10px;
             margin-bottom: 30px;
+            flex-direction: column;
         }
 
-        input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+        input[type="text"] {
+            padding: 15px 20px;
+            background: rgba(13, 13, 25, 0.8);
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            font-family: 'Crimson Text', serif;
             font-size: 16px;
-            transition: border-color 0.3s;
+            border-radius: 2px;
+            transition: all 0.3s;
+            letter-spacing: 1px;
         }
 
-        input:focus {
+        input[type="text"]::placeholder {
+            color: #8b7355;
+        }
+
+        input[type="text"]:focus {
             outline: none;
-            border-color: #667eea;
+            box-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.4),
+                inset 0 0 10px rgba(212, 175, 55, 0.1);
+            border-color: #ffd700;
         }
 
-        button {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: 2px solid #d4af37;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
         }
 
-        button:hover {
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(212, 175, 55, 0.1);
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            box-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.4),
+                inset 0 0 10px rgba(212, 175, 55, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        button:active {
+        .btn:active {
             transform: translateY(0);
         }
 
-        #loading {
-            text-align: center;
-            display: none;
-            margin: 20px 0;
+        .btn-add {
+            flex: 1;
         }
 
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
+        .priority-select {
+            padding: 15px 20px;
+            background: rgba(13, 13, 25, 0.8);
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            font-family: 'Crimson Text', serif;
+            font-size: 16px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .priority-select:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
         }
 
-        .results {
-            display: none;
-            margin-top: 30px;
+        .priority-select option {
+            background: #0a0e27;
+            color: #d4af37;
         }
 
-        .results.show {
-            display: block;
-        }
-
-        .result-item {
-            background: #f8f9fa;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
+        .filter-section {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .result-item.found {
-            border-left-color: #28a745;
+        .btn-filter {
+            padding: 10px 20px;
+            background: rgba(13, 13, 25, 0.8);
+            color: #8b7355;
+            border: 2px solid #8b7355;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 2px;
+            letter-spacing: 1px;
         }
 
-        .result-item.not-found {
-            border-left-color: #dc3545;
-            opacity: 0.6;
+        .btn-filter:hover {
+            border-color: #d4af37;
+            color: #d4af37;
         }
 
-        .result-name {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .result-status {
-            font-size: 12px;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .status-found {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-not-found {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .result-link {
-            margin-top: 8px;
-        }
-
-        .result-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 12px;
-            word-break: break-all;
-        }
-
-        .result-link a:hover {
-            text-decoration: underline;
-        }
-
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            display: none;
-        }
-
-        .error.show {
-            display: block;
+        .btn-filter.active {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            color: #0a0e27;
+            border-color: #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
 
         .stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.05);
+            border: 2px solid #8b7355;
+            border-radius: 2px;
+        }
+
+        .stat-item {
+            flex: 1;
             text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            color: #666;
-            font-size: 14px;
         }
 
-        .platforms-info {
-            background: #e7f3ff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .stat-label {
             font-size: 12px;
-            color: #333;
+            color: #8b7355;
+            margin-top: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .platforms-info strong {
-            color: #667eea;
+        .tasks-list {
+            max-height: 450px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .task-item {
+            background: rgba(212, 175, 55, 0.02);
+            border: 2px solid #8b7355;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 2px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .task-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #d4af37;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .task-item:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+            border-color: #556b2f;
+        }
+
+        .task-item.completed::before {
+            opacity: 1;
+            background: #556b2f;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #8b7355;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #d4af37;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-text {
+            color: #d4af37;
+            font-size: 16px;
+            word-break: break-word;
+        }
+
+        .task-date {
+            font-size: 12px;
+            color: #8b7355;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        .task-priority {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 8px;
+            border: 1px solid;
+            letter-spacing: 1px;
+        }
+
+        .priority-high {
+            background: rgba(178, 34, 34, 0.2);
+            color: #ff6b6b;
+            border-color: #ff6b6b;
+        }
+
+        .priority-medium {
+            background: rgba(184, 134, 11, 0.2);
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+
+        .priority-low {
+            background: rgba(85, 107, 47, 0.2);
+            color: #90ee90;
+            border-color: #90ee90;
+        }
+
+        .btn-delete {
+            background: rgba(178, 34, 34, 0.3);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+            border-radius: 2px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .btn-delete:hover {
+            background: rgba(178, 34, 34, 0.6);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8b7355;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.6;
+        }
+
+        .empty-state p {
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            padding-top: 20px;
+            border-top: 2px solid #8b7355;
+        }
+
+        .btn-clear, .btn-export {
+            flex: 1;
+            padding: 15px;
+            color: white;
+            border: 2px solid;
+            border-radius: 2px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, rgba(13, 13, 25, 0.9) 0%, rgba(26, 26, 46, 0.9) 100%);
+        }
+
+        .btn-export {
+            color: #90ee90;
+            border-color: #90ee90;
+        }
+
+        .btn-export:hover {
+            box-shadow: 0 0 20px rgba(144, 238, 144, 0.3);
+        }
+
+        .btn-clear {
+            color: #ff6b6b;
+            border-color: #ff6b6b;
+        }
+
+        .btn-clear:hover {
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Scrollbar personnalisée */
+        .tasks-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .tasks-list::-webkit-scrollbar-track {
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .tasks-list::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 2px;
+        }
+
+        .tasks-list::-webkit-scrollbar-thumb:hover {
+            background: #ffd700;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 36px;
+                letter-spacing: 2px;
+            }
+
+            .input-wrapper {
+                flex-direction: column;
+            }
+
+            .btn-add {
+                width: 100%;
+            }
+
+            .stats {
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🔍 Sherlock</h1>
-        <p class="subtitle">Trouvez les comptes associés à un nom d'utilisateur</p>
+        <header>
+            <h1>SHERLOCK</h1>
+            <p class="subtitle">The Hunt Begins</p>
+            <p class="tagline">"A man is known by the company he keeps" — Find them all</p>
+        </header>
 
-        <div class="search-box">
+        <div class="input-section">
             <input 
                 type="text" 
-                id="username" 
-                placeholder="Entrez un nom d'utilisateur..." 
+                id="taskInput" 
+                placeholder="Enter a username to search..." 
                 autocomplete="off"
             >
-            <button onclick="searchUsername()">Chercher</button>
-        </div>
-
-        <div id="loading">
-            <div class="spinner"></div>
-            <p style="margin-top: 10px; color: #667eea;">Recherche en cours...</p>
-        </div>
-
-        <div id="error" class="error"></div>
-
-        <div id="results" class="results">
-            <h2 style="color: #333; margin-bottom: 15px; font-size: 18px;">Résultats :</h2>
-            <div id="resultsContainer"></div>
-            <div class="stats">
-                <p>Trouvé sur <strong id="foundCount">0</strong> plateforme(s) sur <strong id="totalCount">0</strong></p>
+            <div class="input-wrapper">
+                <select id="prioritySelect" class="priority-select">
+                    <option value="low">⚔ Low Priority</option>
+                    <option value="medium" selected>⚔ Medium Priority</option>
+                    <option value="high">⚔ High Priority</option>
+                </select>
+                <button class="btn btn-add" onclick="addTask()">SEARCH</button>
             </div>
         </div>
 
-        <div class="platforms-info">
-            <strong>Plateforme supportées :</strong><br>
-            Instagram, Twitter/X, TikTok, YouTube, Facebook, LinkedIn, GitHub, Pinterest, Snapchat, Twitch, Reddit, Discord, Medium, Tumblr, et plus...
+        <div class="filter-section">
+            <button class="btn-filter active" onclick="filterTasks('all')">All Searches</button>
+            <button class="btn-filter" onclick="filterTasks('active')">Pending</button>
+            <button class="btn-filter" onclick="filterTasks('completed')">Completed</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="activeCount">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="completedCount">0</div>
+                <div class="stat-label">Found</div>
+            </div>
+        </div>
+
+        <div class="tasks-list" id="tasksList"></div>
+
+        <div class="action-buttons">
+            <button class="btn-export" onclick="exportTasks()">⬇ EXPORT</button>
+            <button class="btn-clear" onclick="clearCompleted()">🔥 CLEAR</button>
         </div>
     </div>
 
     <script>
-        const SITES = {
-            'Instagram': 'https://instagram.com/{user}',
-            'Twitter': 'https://twitter.com/{user}',
-            'TikTok': 'https://tiktok.com/@{user}',
-            'YouTube': 'https://youtube.com/@{user}',
-            'Facebook': 'https://facebook.com/{user}',
-            'LinkedIn': 'https://linkedin.com/in/{user}',
-            'GitHub': 'https://github.com/{user}',
-            'Pinterest': 'https://pinterest.com/{user}',
-            'Snapchat': 'https://snapchat.com/add/{user}',
-            'Twitch': 'https://twitch.tv/{user}',
-            'Reddit': 'https://reddit.com/user/{user}',
-            'Discord': 'https://discordapp.com/users/{user}',
-            'Medium': 'https://medium.com/@{user}',
-            'Tumblr': 'https://tumblr.com/blog/{user}',
-            'BeReal': 'https://bere.al/user/{user}'
-        };
+        const STORAGE_KEY = 'sherlock_searches';
+        let currentFilter = 'all';
+        let tasks = [];
 
-        async function checkUsername(site, url, username) {
-            try {
-                const response = await fetch(url, {
-                    method: 'HEAD',
-                    mode: 'no-cors',
-                    cache: 'no-cache'
-                });
-                return true;
-            } catch (e) {
-                return false;
-            }
+        function loadTasks() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            tasks = saved ? JSON.parse(saved) : [];
+            renderTasks();
+            updateStats();
         }
 
-        async function searchUsername() {
-            const username = document.getElementById('username').value.trim();
-            const loading = document.getElementById('loading');
-            const error = document.getElementById('error');
-            const results = document.getElementById('results');
-            const resultsContainer = document.getElementById('resultsContainer');
+        function saveTasks() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+        }
 
-            if (!username) {
-                error.textContent = '⚠️ Veuillez entrer un nom d\'utilisateur';
-                error.classList.add('show');
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const priority = document.getElementById('prioritySelect').value;
+            const text = input.value.trim();
+
+            if (!text) {
+                alert('⚠ Enter a username to search');
                 return;
             }
 
-            error.classList.remove('show');
-            loading.style.display = 'block';
-            results.classList.remove('show');
-            resultsContainer.innerHTML = '';
+            const task = {
+                id: Date.now(),
+                text: text,
+                completed: false,
+                priority: priority,
+                date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+            };
 
-            try {
-                let foundCount = 0;
-                const resultsList = [];
+            tasks.unshift(task);
+            saveTasks();
+            input.value = '';
+            document.getElementById('prioritySelect').value = 'medium';
+            renderTasks();
+            updateStats();
+        }
 
-                // Recherche parallèle
-                const promises = Object.entries(SITES).map(async ([site, template]) => {
-                    const url = template.replace('{user}', encodeURIComponent(username));
-                    const found = await checkUsername(site, url, username);
-                    
-                    return {
-                        site,
-                        url,
-                        found
-                    };
-                });
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderTasks();
+            updateStats();
+        }
 
-                const allResults = await Promise.all(promises);
-
-                allResults.forEach(result => {
-                    if (result.found) foundCount++;
-                    resultsList.push(result);
-                });
-
-                // Affichage des résultats
-                loading.style.display = 'none';
-
-                if (foundCount === 0) {
-                    resultsContainer.innerHTML = '<p style="text-align: center; color: #999;">Aucun compte trouvé pour ce nom d\'utilisateur.</p>';
-                } else {
-                    resultsList.forEach(result => {
-                        const div = document.createElement('div');
-                        div.className = `result-item ${result.found ? 'found' : 'not-found'}`;
-                        
-                        const statusText = result.found ? '✅ Trouvé' : '❌ Non trouvé';
-                        const statusClass = result.found ? 'status-found' : 'status-not-found';
-                        
-                        div.innerHTML = `
-                            <div>
-                                <div class="result-name">${result.site}</div>
-                                ${result.found ? `<div class="result-link"><a href="${result.url}" target="_blank">${result.url}</a></div>` : ''}
-                            </div>
-                            <span class="result-status ${statusClass}">${statusText}</span>
-                        `;
-                        
-                        if (result.found) {
-                            resultsContainer.insertBefore(div, resultsContainer.firstChild);
-                        } else {
-                            resultsContainer.appendChild(div);
-                        }
-                    });
-                }
-
-                document.getElementById('foundCount').textContent = foundCount;
-                document.getElementById('totalCount').textContent = Object.keys(SITES).length;
-                results.classList.add('show');
-
-            } catch (e) {
-                loading.style.display = 'none';
-                error.textContent = '⚠️ Erreur lors de la recherche: ' + e.message;
-                error.classList.add('show');
+        function toggleTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                renderTasks();
+                updateStats();
             }
         }
 
-        // Entrée au clavier
-        document.getElementById('username').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchUsername();
+        function filterTasks(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.btn-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderTasks();
+        }
+
+        function renderTasks() {
+            const tasksList = document.getElementById('tasksList');
+            let filtered = tasks;
+
+            if (currentFilter === 'active') {
+                filtered = tasks.filter(t => !t.completed);
+            } else if (currentFilter === 'completed') {
+                filtered = tasks.filter(t => t.completed);
+            }
+
+            if (filtered.length === 0) {
+                tasksList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🐉</div>
+                        <p>No searches ${currentFilter !== 'all' ? `(${currentFilter})` : ''}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            tasksList.innerHTML = filtered.map(task => `
+                <div class="task-item ${task.completed ? 'completed' : ''}">
+                    <input 
+                        type="checkbox" 
+                        ${task.completed ? 'checked' : ''}
+                        onchange="toggleTask(${task.id})"
+                    >
+                    <div class="task-content">
+                        <div class="task-text">${escapeHtml(task.text)}</div>
+                        <div class="task-date">📅 ${task.date}</div>
+                        <span class="task-priority priority-${task.priority}">
+                            ${task.priority === 'high' ? '🔴' : task.priority === 'medium' ? '🟡' : '🟢'} 
+                            ${capitalize(task.priority)}
+                        </span>
+                    </div>
+                    <button class="btn-delete" onclick="deleteTask(${task.id})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const total = tasks.length;
+            const completed = tasks.filter(t => t.completed).length;
+            const active = total - completed;
+
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('activeCount').textContent = active;
+            document.getElementById('completedCount').textContent = completed;
+        }
+
+        function clearCompleted() {
+            if (confirm('Are you sure you want to clear all completed searches?')) {
+                tasks = tasks.filter(t => !t.completed);
+                saveTasks();
+                renderTasks();
+                updateStats();
+            }
+        }
+
+        function exportTasks() {
+            const data = {
+                exported: new Date().toLocaleString(),
+                tasks: tasks
+            };
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sherlock_searches_${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        document.getElementById('taskInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTask();
         });
+
+        loadTasks();
     </script>
 </body>
 </html>
